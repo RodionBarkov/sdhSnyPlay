@@ -26,3 +26,15 @@ async def get_tracks():
         return tracks
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
+    
+@router.get("/{track_id}", response_model=STracks)
+async def get_track_by_id(track_id: int):
+    try:
+        track = await TrackReposutory.find_by_id(track_id)
+        if track is None:
+            raise HTTPException(status_code=404, detail=f"Track {track_id} not found")
+        return track
+    except ValueError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))
