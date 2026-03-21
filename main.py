@@ -1,4 +1,5 @@
 from fastapi import FastAPI, Depends, APIRouter
+from fastapi.staticfiles import StaticFiles
 from typing import Annotated
 from pydantic import BaseModel
 from contextlib import asynccontextmanager
@@ -21,6 +22,7 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(lifespan=lifespan)
 app.include_router(tracks_router)
+app.mount("/data", StaticFiles(directory="data"), name="data")
 
 # Настройка CORS
 app.add_middleware(
