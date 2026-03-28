@@ -1,3 +1,5 @@
+import os
+
 from fastapi import FastAPI, Depends, APIRouter
 from fastapi.staticfiles import StaticFiles
 from typing import Annotated
@@ -23,6 +25,8 @@ async def lifespan(app: FastAPI):
 app = FastAPI(lifespan=lifespan)
 app.include_router(tracks_router)
 app.mount("/data", StaticFiles(directory="data"), name="data")
+if os.path.isdir("frontend_dist"):
+    app.mount("/", StaticFiles(directory="frontend_dist", html=True), name="frontend")
 
 # Настройка CORS
 app.add_middleware(
