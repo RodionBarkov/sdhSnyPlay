@@ -8,6 +8,13 @@ class STracksAdd(BaseModel):
     audio_url: str
     lyrics: Optional[str] = None
 
+class STracksUpdate(BaseModel):  # Новая схема для обновления
+    name: Optional[str] = None
+    description: Optional[str] = None
+    cover_url: Optional[str] = None
+    audio_url: Optional[str] = None
+    lyrics: Optional[str] = None
+
 class STracks(BaseModel):
     id: int
     name: str
@@ -15,7 +22,6 @@ class STracks(BaseModel):
     cover_url: Optional[str] = None
     audio_url: str
     lyrics: Optional[str] = None
-
 
     class Config:
         from_attributes = True
